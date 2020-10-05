@@ -1,11 +1,13 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace MLEventSystem
 {
+    /// <summary>
+    /// 事件管理器
+    /// </summary>
     [DisallowMultipleComponent]
     public sealed class EventManager : Singleton<EventManager>
     {
@@ -28,6 +30,9 @@ namespace MLEventSystem
             listeners.Add(eventID, events);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void AddListener<T>(T eventID, EventHandler listener) where T : Enum
         {
             List<EventHandler> events = null;
@@ -52,7 +57,7 @@ namespace MLEventSystem
 
             if (!listeners.TryGetValue(eventID, out events))
             {
-                Log.Print($"no event({eventID}) exist.");
+                Log.Print($"[notification]: no event({eventID}) exist.");
                 return;
             }
 
@@ -63,13 +68,16 @@ namespace MLEventSystem
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Notification<T>(T eventID, object sender, params object[] args) where T : Enum
         {
             List<EventHandler> events = null;
             int id = Convert.ToInt32(eventID);
             if (!listeners.TryGetValue(id, out events))
             {
-                Log.Print($"no event({eventID}) exist.");
+                Log.Print($"[notification]: no event({eventID}) exist.");
                 return;
             }
 
@@ -87,17 +95,20 @@ namespace MLEventSystem
         {
             List<EventHandler> handlers = null;
             if (!listeners.TryGetValue(eventID, out handlers))
-                Log.Print($"no event({eventID}) exist.");
+                Log.Print($"[remove event]: no event({eventID}) exist.");
 
             listeners.Remove(eventID);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void RemoveEvent<T>(T eventID) where T : Enum
         {
             List<EventHandler> handlers = null;
             int id = Convert.ToInt32(eventID);
             if (!listeners.TryGetValue(id, out handlers))
-                Log.Print($"no event({eventID}) exist.");
+                Log.Print($"[remove event]: no event({eventID}) exist.");
 
             listeners.Remove(id);
         }
@@ -110,7 +121,7 @@ namespace MLEventSystem
             List<EventHandler> handlers = null;
             if (!listeners.TryGetValue(eventID, out handlers))
             {
-                Log.Print($"no event({eventID}) exist.");
+                Log.Print($"[remove event]: no event({eventID}) exist.");
                 return;
             }
             else
@@ -118,17 +129,20 @@ namespace MLEventSystem
                 if (handlers.Contains(handler))
                     handlers.Remove(handler);
                 else
-                    Log.Print($"no EventHandler({handler}) exists in event({eventID}).");
+                    Log.Print($"[remove event]: no EventHandler({handler}) exists in event({eventID}).");
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void RemoveEvent<T>(T eventID, EventHandler handler) where T : Enum
         {
             List<EventHandler> handlers = null;
             int id = Convert.ToInt32(eventID);
             if (!listeners.TryGetValue(id, out handlers))
             {
-                Log.Print($"no event({eventID}) exist.");
+                Log.Print($"[remove event]: no event({eventID}) exist.");
                 return;
             }
             else
@@ -136,7 +150,7 @@ namespace MLEventSystem
                 if (handlers.Contains(handler))
                     handlers.Remove(handler);
                 else
-                    Log.Print($"no EventHandler({handler}) exists in event({eventID}).");
+                    Log.Print($"[remove event]: no EventHandler({handler}) exists in event({eventID}).");
             }
         }
 
@@ -164,6 +178,9 @@ namespace MLEventSystem
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected override void OnAwake()
         {
             SceneManager.sceneLoaded += OnSceneLoaded;

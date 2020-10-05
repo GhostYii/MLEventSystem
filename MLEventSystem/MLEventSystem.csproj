@@ -25,13 +25,18 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\..\Unity Projects\Developing\MLTools\Assets\Plugins\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\..\Unity Projects\Developing\MLTools\Assets\Plugins\MLEventSystem.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="UnityEditor">
+      <HintPath>..\..\Unity Lib\UnityEditor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\Unity Lib\UnityEngine.dll</HintPath>
       <Private>False</Private>
@@ -40,12 +45,11 @@
   <ItemGroup>
     <Compile Include="Core\EventManager.cs" />
     <Compile Include="Data\Constant.cs" />
+    <Compile Include="Editor\EventSystemEditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Static\Log.cs" />
     <Compile Include="Static\Singeton.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Editor\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
